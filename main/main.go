@@ -64,6 +64,7 @@ func readConfDir(dirPath string) {
 	}
 }
 
+//TODO: rain0 这里获取config.json文件，默认在根目录下
 func getConfigFilePath() cmdarg.Arg {
 	if dirExists(configDir) {
 		log.Println("Using confdir from arg:", configDir)
@@ -78,7 +79,12 @@ func getConfigFilePath() cmdarg.Arg {
 	}
 
 	if workingDir, err := os.Getwd(); err == nil {
+		//TODO: rain0 这里获取config.json文件，默认为根目录下的config.json
+
 		configFile := filepath.Join(workingDir, "config.json")
+
+		log.Println("根目录路径: ", configFile)
+
 		if fileExists(configFile) {
 			log.Println("Using default config: ", configFile)
 			return cmdarg.Arg{configFile}

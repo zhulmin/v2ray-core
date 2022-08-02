@@ -6,6 +6,7 @@ package platform
 import (
 	"errors"
 	"io/fs"
+	"log"
 	"os"
 	"path/filepath"
 )
@@ -29,6 +30,21 @@ func GetAssetLocation(file string) string {
 	const name = "v2ray.location.asset"
 	assetPath := NewEnvFlag(name).GetValue(getExecutableDir)
 	defPath := filepath.Join(assetPath, file)
+
+	//TEST: 测试代码
+	log.Println("geoip目录相关路径: ", defPath)
+	log.Println("geoip目录相关路径: ", assetPath)
+
+	//FIXME: rain0 这里写了测试, 直接返回路径
+	if file == "geoip.dat" || file == "geosite.dat" {
+		var filename = "/Users/rain/Desktop/app/golang/v2ray-core/" + file
+		if _, err := os.Stat(filename); err != nil && errors.Is(err, fs.ErrNotExist) {
+
+		} else {
+			return filename
+		}
+	}
+
 	for _, p := range []string{
 		defPath,
 		filepath.Join("/usr/local/share/v2ray/", file),

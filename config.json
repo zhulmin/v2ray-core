@@ -1,0 +1,105 @@
+{
+  "inbound": {
+    "port": 1081,
+    "listen": "127.0.0.1",
+    "protocol": "socks",
+    "settings": {
+      "auth": "noauth",
+      "udp": false,
+      "ip": "127.0.0.1"
+    }
+  },
+  "outbounds" : [
+    {
+      "sendThrough" : "0.0.0.0",
+      "mux" : {
+        "enabled" : false,
+        "concurrency" : 8
+      },
+      "protocol" : "vmess",
+      "settings" : {
+        "vnext" : [
+          {
+            "address" : "104.243.21.78",
+            "users" : [
+              {
+                "id" : "f3234ac9-ad05-7cd3-99b2-7fa60b3ccf42",
+                "alterId" : 0,
+                "security" : "chacha20-poly1305",
+                "level" : 0
+              }
+            ],
+            "port" : 54621
+          }
+        ]
+      },
+      "tag" : "bwh",
+      "streamSettings" : {
+        "sockopt" : {
+
+        },
+        "quicSettings" : {
+          "key" : "",
+          "security" : "none",
+          "header" : {
+            "type" : "none"
+          }
+        },
+        "tlsSettings" : {
+          "allowInsecure" : false,
+          "alpn" : [
+            "http\/1.1"
+          ],
+          "serverName" : "server.cc",
+          "allowInsecureCiphers" : false
+        },
+        "wsSettings" : {
+          "path" : "",
+          "headers" : {
+
+          }
+        },
+        "httpSettings" : {
+          "path" : "",
+          "host" : [
+            ""
+          ]
+        },
+        "tcpSettings" : {
+          "header" : {
+            "type" : "none"
+          }
+        },
+        "kcpSettings" : {
+          "header" : {
+            "type" : "none"
+          },
+          "mtu" : 1350,
+          "congestion" : false,
+          "tti" : 20,
+          "uplinkCapacity" : 5,
+          "writeBufferSize" : 1,
+          "readBufferSize" : 1,
+          "downlinkCapacity" : 20
+        },
+        "security" : "none",
+        "network" : "ws"
+      }
+    }
+  ],
+  "routing" :
+    {
+      "name" : "all_to_direct",
+      "domainStrategy" : "AsIs",
+      "rules" : [
+        {
+          "type" : "field",
+          "domains": [
+            "google.com"
+          ],
+          "outboundTag" : "bwh",
+          "port" : "0-65535"
+        }
+      ]
+    }
+}

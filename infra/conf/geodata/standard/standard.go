@@ -11,7 +11,7 @@ import (
 )
 
 //go:generate go run github.com/v2fly/v2ray-core/v4/common/errors/errorgen
-
+//TODO: rain0 在这里加载IP地址
 func loadIP(filename, country string) ([]*router.CIDR, error) {
 	geoipBytes, err := filesystem.ReadAsset(filename)
 	if err != nil {
@@ -31,6 +31,7 @@ func loadIP(filename, country string) ([]*router.CIDR, error) {
 	return nil, newError("country not found in ", filename, ": ", country)
 }
 
+//TODO: rain0 在这里加载域名地址
 func loadSite(filename, list string) ([]*router.Domain, error) {
 	geositeBytes, err := filesystem.ReadAsset(filename)
 	if err != nil {
@@ -52,10 +53,12 @@ func loadSite(filename, list string) ([]*router.Domain, error) {
 
 type standardLoader struct{}
 
+//TODO: rain0 载入地址
 func (d standardLoader) LoadSite(filename, list string) ([]*router.Domain, error) {
 	return loadSite(filename, list)
 }
 
+//TODO: rain0 载入ip
 func (d standardLoader) LoadIP(filename, country string) ([]*router.CIDR, error) {
 	return loadIP(filename, country)
 }
